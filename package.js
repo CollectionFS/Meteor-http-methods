@@ -1,7 +1,7 @@
 Package.describe({
   git: 'https://github.com/CollectionFS/Meteor-http-methods.git',
   name: 'cfs:http-methods',
-  version: '0.0.27',
+  version: '0.0.28',
   summary: 'Adds HTTP.methods RESTful'
 });
 
