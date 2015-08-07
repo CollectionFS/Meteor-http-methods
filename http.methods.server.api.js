@@ -538,7 +538,7 @@ WebApp.connectHandlers.use(function(req, res, next) {
         // If no streams are waiting
         if (self._streamsWaiting === 0 &&
             (self.statusCode === 200 || self.statusCode === 206) &&
-            self.done) {
+            self.finished) {
           res.end(resultBuffer);
         }
       }
