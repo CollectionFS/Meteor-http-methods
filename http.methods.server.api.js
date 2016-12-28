@@ -569,8 +569,10 @@ WebApp.connectHandlers.use(function(req, res, next) {
         // or `createWriteStream` being called, which means before we do
         // `methodCall.apply` below.
         req.on('end', function() {
-          self._streamsWaiting--;
-          sendResponseIfDone();
+          if (res._headers['content-encoding'] !== 'gzip') {
+            self._streamsWaiting--;
+            sendResponseIfDone();
+          }
         });
 
         // Get the result of the methodCall
