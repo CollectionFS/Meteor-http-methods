@@ -413,6 +413,21 @@ var setCordovaHeaders = function(request, response) {
 // Handle the actual connection
 WebApp.connectHandlers.use(function(req, res, next) {
 
+  // Avoid answering to bot/crawler requests (Spiderable fix)
+  var botExpr = [
+    /^facebookexternalhit/i,
+    /^Facebot/,
+    /^linkedinbot/i,
+    /^twitterbot/i,
+    /^slackbot-linkexpanding/i
+  ];
+  if (/\?.*_escaped_fragment_=/.test(req.url) ||
+    _.any(botExpr, function(re) {
+      return re.test(req.headers['user-agent']);
+    })) {
+    return next();
+  }
+
   // Check to se if this is a http method call
   var method = _methodHTTP.getMethod(req._parsedUrl.pathname);
 
